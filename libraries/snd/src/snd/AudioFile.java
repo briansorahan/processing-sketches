@@ -6,6 +6,8 @@
  * @author Brian Sorahan
  */
 
+package snd;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -14,6 +16,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import processing.core.*;
 
 class AudioFile {
     private String filename;
@@ -125,19 +128,5 @@ class AudioFile {
 	printer.printf("%30s: %d\n", "frame size (bytes)", frameSize);
 	printer.printf("%30s: %d\n", "length (bytes)", fileLength);
 	printer.printf("%30s: %d\n", "available (bytes)", this.available());
-    }
-
-    public static void main(String[] args) {
-	if (args.length == 0) {
-	    AudioFile audioFile = AudioFile.open("windchimes.wav");
-	    audioFile.printInfo(System.out);
-	    System.out.println("Slurping file...");
-	    int bytesSlurped = audioFile.slurp();
-	    System.out.println("Bytes slurped: " + bytesSlurped);
-	} else {
-	    for (int i = 0; i < args.length; i++) {
-		AudioFile.open(args[i]).printInfo(System.out);
-	    }
-	}
     }
 }
