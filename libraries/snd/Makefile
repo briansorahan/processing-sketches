@@ -1,4 +1,4 @@
-.PHONY: all backup clean
+.PHONY: all backup clean doc
 
 include project.conf
 
@@ -19,19 +19,28 @@ SOURCE_PACKAGES_STRIPPED = $(subst $(SOURCE_DIR)/,$(nullstring),$(SOURCE_PACKAGE
 SOURCE_FILES = $(shell find $(SOURCE_DIR) -type f -name '*.java')
 # compilation targets
 CLASS_FILES = $(patsubst %.java,%.class,$(SOURCE_FILES))
+
 # name of output jar file
 JAR = $(LIBRARY_DIR)/$(PROJECT_NAME).jar
+# arguments when creating the jar
 JARARGS = cf $(JAR) -C $(LIBRARY_DIR) $(SOURCE_PACKAGES_STRIPPED)
+
+# javadoc arguments
+JAVADOC_ARGS = -extdirs $(PROCESSING_CORE) -sourcepath $(SOURCE_DIR) -d $(JAVADOCS_DIR) $(SOURCE_PACKAGES_STRIPPED)
+
 # javac flags
 JFLAGS = -extdirs $(PROCESSING_CORE) -d $(LIBRARY_DIR)
 
-all: backup $(JAR)
+all: $(JAR) doc
 
 $(JAR): $(CLASS_FILES)
 	jar $(JARARGS)
 
 %.class: %.java
 	$(JAVAC) $(JFLAGS) $<
+
+doc: $(JAVADOCS_DIR)
+	javadoc $(JAVADOC_ARGS)
 
 backup:
 	-rm -rf $(PWD).bak

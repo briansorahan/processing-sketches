@@ -18,7 +18,7 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import processing.core.*;
 
-class AudioFile {
+public class AudioFile {
     private String filename;
     private File file;
     private long fileLength;
