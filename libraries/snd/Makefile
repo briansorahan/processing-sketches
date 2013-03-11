@@ -34,13 +34,13 @@ JFLAGS = -extdirs $(PROCESSING_CORE) -d $(LIBRARY_DIR)
 all: $(JAR) doc
 
 $(JAR): $(CLASS_FILES)
-	jar $(JARARGS)
+	$(JAR_CMD) $(JARARGS)
 
 %.class: %.java
 	$(JAVAC) $(JFLAGS) $<
 
 doc: $(JAVADOCS_DIR)
-	javadoc $(JAVADOC_ARGS)
+	$(JAVADOC) $(JAVADOC_ARGS)
 
 backup:
 	-rm -rf $(PWD).bak
