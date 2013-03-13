@@ -26,7 +26,11 @@ JAR = $(LIBRARY_DIR)/$(PROJECT_NAME).jar
 JARARGS = cf $(JAR) -C $(LIBRARY_DIR) $(SOURCE_PACKAGES_STRIPPED)
 
 # javadoc arguments
-JAVADOC_ARGS = -extdirs $(PROCESSING_CORE) -sourcepath $(SOURCE_DIR) -d $(JAVADOCS_DIR) $(SOURCE_PACKAGES_STRIPPED)
+JAVADOC_ARGS = 	-extdirs $(PROCESSING_CORE) \
+	       	-sourcepath $(SOURCE_DIR) \
+		-d $(JAVADOCS_DIR) \
+		-windowtitle $(PROJECT_NAME) \
+		$(SOURCE_PACKAGES_STRIPPED)
 
 # javac flags
 JFLAGS = -extdirs $(PROCESSING_CORE) -d $(LIBRARY_DIR)
