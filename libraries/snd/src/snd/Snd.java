@@ -1,20 +1,18 @@
 package snd;
 
-import processing.core.*;
+import java.util.Set;
+import processing.core.PApplet;
 
 public class Snd {
     private PApplet papplet;
-    private static Snd instance;
-
-    private Snd() {}
-
-    private Snd(PApplet papplet) {
+    private AudioFile audioFile;
+    
+    public Snd(PApplet papplet) {
 	this.papplet = papplet;
     }
 
-    public static Snd getInstance(PApplet papplet) {
-	if (instance == null)
-	    instance = new Snd(papplet);
-	return instance;
+    public Snd openAudioFile(String filename) {
+	audioFile = AudioFile.open(filename);
+	return this;
     }
 }
