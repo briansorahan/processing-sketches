@@ -96,7 +96,7 @@ public class AudioFile {
 	int neg = 1 << 7;
 	int u = (upper + neg) << 8;
 	int l = lower + neg;
-	return ((double) u + l)/((double) (1 << 16));
+	return ((double) u + l)/((double) (1 << 15)) - 1.0d;
     }
 
     public int slurp(Ticker ticker, int ticks) {
