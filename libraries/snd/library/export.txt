@@ -1,1 +1,2 @@
 applet=snd.jar
+application=snd.jar
