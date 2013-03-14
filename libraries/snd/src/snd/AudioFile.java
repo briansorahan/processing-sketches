@@ -80,11 +80,11 @@ public class AudioFile {
 	return bitsPerSample;
     }
 
-    public int frameSize() {
+    private int frameSize() {
 	return frameSize;
     }
 
-    public int available() {
+    private int available() {
 	try {
 	    return input.available();
 	}
@@ -93,19 +93,31 @@ public class AudioFile {
 	}
     }
 
+    // TODO: Support bit rates other than 16bit
     private double getSample(byte upper, byte lower) {
 	int u = upper << 8;
 	int l = lower;
 	return ((double) (u + l)) / AudioFile.SAMPLE_DIV;
     }
 
+    // TODO: Support multiple channels
+    // TODO: Support bit rates other than 16bit
     private double[] convertBuffer(byte[] bytes, int bufferSize) {
 	double[] samples = new double[bufferSize];
-	
+	for (int i = 0; i < bufferSize; i += 2) {
+	    samples[i] = getSample( bytes[i], bytes[i + 1] );
+	}
 	return samples;
     }
 
-    public int slurp(Renderer renderer, int bufferSize) {
+    /**
+     * @param bufferSize Number of samples per buffer
+     * @param renderers Renderers for each channel
+     */
+    public int slurp(int bufferSize, Renderer... renderers) {
+	if (renderers.length != this.channels())
+	    
+
 	int total = 0;
 	int index = 0;
 	double sampleValue = 0.0;
