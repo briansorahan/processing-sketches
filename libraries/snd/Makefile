@@ -1,4 +1,4 @@
-.PHONY: all backup clean doc
+.PHONY: all backup clean doc foo
 
 include project.conf
 
@@ -33,7 +33,9 @@ JAVADOC_ARGS = 	-extdirs $(PROCESSING_CORE) \
 		$(SOURCE_PACKAGES_STRIPPED)
 
 # javac flags
-JFLAGS = -extdirs $(PROCESSING_CORE) -d $(LIBRARY_DIR)
+JFLAGS =	-extdirs $(PROCESSING_CORE) \
+		-sourcepath $(SOURCE_DIR) \
+		-d $(LIBRARY_DIR)
 
 all: $(JAR) doc
 

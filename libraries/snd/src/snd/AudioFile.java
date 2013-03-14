@@ -25,8 +25,6 @@ public class AudioFile {
     private AudioInputStream input;
     private AudioFormat format;
     private AudioFileFormat fileFormat;
-    private final static int BUFFER_SIZE = 2048;
-    private byte[] buffer = new byte[BUFFER_SIZE];
     private String encoding;
     private int channels;
     private float sampleRate;
@@ -39,6 +37,7 @@ public class AudioFile {
     private AudioFile(String filename) {
 	this.filename = filename;
 	file = new File(filename);
+
 	try {
 	    input = AudioSystem.getAudioInputStream(file);
 	    fileFormat = AudioSystem.getAudioFileFormat(file);
@@ -93,23 +92,35 @@ public class AudioFile {
 	}
     }
 
-    public int read() {
-	int nbytes = 0;
-	try {
-	    nbytes = input.read(buffer, 0, BUFFER_SIZE);
-	}
-	catch (IOException ioex) {
-	}
+    // public int read() {
+    // 	int nbytes = 0;
+    // 	try {
+    // 	    nbytes = input.read(buffer, 0, BUFFER_SIZE);
+    // 	}
+    // 	catch (IOException ioex) {
+    // 	}
 
-	return nbytes;
-    }
+    // 	return nbytes;
+    // }
 
-    public int slurp() {
+    public int slurp(Ticker ticker, int ticks) {
 	int total = 0;
+	int index = 0;
+	double sampleValue = 0.0;
+	byte[] buffer = new byte[ticks];
+
 	try {
 	    while (input.available() > 0) {
-		total += read();
+		// read into buffer
+		total += input.read(buffer, 0, ticks);
+
+		// compute sample value
+		
+		
+		// tick
+		ticker.tick(index++, sampleValue);
 	    }
+
 	    input.reset();
 	}
 	catch (IOException ioex) {
