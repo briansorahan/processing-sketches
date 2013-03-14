@@ -30,6 +30,7 @@ public class AudioFile {
     private float sampleRate;
     private int bitsPerSample;
     private int frameSize;
+    private final static double SAMPLE_DIV = (double) (1 << 15);
 
     private AudioFile() {
     }
@@ -93,28 +94,28 @@ public class AudioFile {
     }
 
     private double getSample(byte upper, byte lower) {
-	int neg = 1 << 7;
-	int u = (upper + neg) << 8;
-	int l = lower + neg;
-	return ((double) u + l)/((double) (1 << 15)) - 1.0d;
+	int u = upper << 8;
+	int l = lower;
+	return ((double) (u + l)) / AudioFile.SAMPLE_DIV;
     }
 
-    public int slurp(Ticker ticker, int ticks) {
+    private double[] convertBuffer(byte[] bytes, int bufferSize) {
+	double[] samples = new double[bufferSize];
+	
+	return samples;
+    }
+
+    public int slurp(Renderer renderer, int bufferSize) {
 	int total = 0;
 	int index = 0;
 	double sampleValue = 0.0;
-	byte[] buffer = new byte[ticks];
+	byte[] buffer = new byte[bufferSize];
 
 	try {
 	    while (input.available() > 0) {
 		// read into buffer
-		total += input.read(buffer, 0, ticks);
-
-		// compute sample value
-		
-		
-		// tick
-		ticker.tick(index++, sampleValue);
+		total += input.read(buffer, 0, bufferSize);
+		renderer.render(convertBuffer(buffer, bufferSize));
 	    }
 
 	    input.reset();
