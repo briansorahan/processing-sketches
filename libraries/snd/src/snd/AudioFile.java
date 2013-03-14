@@ -126,15 +126,17 @@ public class AudioFile {
 	return total;
     }
 
-    public void printInfo(PrintStream printer) {
-	printer.println("============================================================");
-	printer.printf("%30s: %s\n", "file", filename);
-	printer.printf("%30s: %s\n", "encoding", encoding);
-	printer.printf("%30s: %d\n", "channels", channels);
-	printer.printf("%30s: %f\n", "sample rate", sampleRate);
-	printer.printf("%30s: %d\n", "bit rate", bitsPerSample);
-	printer.printf("%30s: %d\n", "frame size (bytes)", frameSize);
-	printer.printf("%30s: %d\n", "length (bytes)", fileLength);
-	printer.printf("%30s: %d\n", "available (bytes)", this.available());
+    public String toString() {
+	StringBuilder rep = new StringBuilder();
+        rep.append(String.format("============================================================"));
+	rep.append(String.format("%30s: %s\n", "file", filename));
+	rep.append(String.format("%30s: %s\n", "encoding", encoding));
+	rep.append(String.format("%30s: %d\n", "channels", channels));
+	rep.append(String.format("%30s: %f\n", "sample rate", sampleRate));
+	rep.append(String.format("%30s: %d\n", "bit rate", bitsPerSample));
+	rep.append(String.format("%30s: %d\n", "frame size (bytes)", frameSize));
+	rep.append(String.format("%30s: %d\n", "length (bytes)", fileLength));
+	rep.append(String.format("%30s: %d\n", "available (bytes)", this.available()));
+	return rep.toString();
     }
 }
